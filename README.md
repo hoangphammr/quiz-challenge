@@ -16,6 +16,7 @@ Before setting up, ensure you have the following installed:
 PHP (>= 7.4)
 Composer (for managing PHP dependencies)
 Node.js (for building the frontend if needed)
+```
 
 1. Clone the Repository
 Start by cloning the repository to your local machine:
@@ -24,6 +25,7 @@ Start by cloning the repository to your local machine:
 bash
 git clone https://github.com/hoangphammr/quiz-challenge.git
 cd real-time-quiz
+```
 
 2. Install Dependencies
 Use Composer to install PHP dependencies (including Workerman, which is used to handle WebSocket connections):
@@ -31,6 +33,7 @@ Use Composer to install PHP dependencies (including Workerman, which is used to 
 ```markdown
 bash
 composer install
+```
 
 This will install all necessary packages defined in composer.json.
 
@@ -40,6 +43,7 @@ Navigate to the project root and run the WebSocket server using Workerman:
 ```markdown
 bash
 php server.php
+```
 
 By default, the WebSocket server will run on port 9502. You can adjust the port in the server.php file if needed.
 
@@ -49,6 +53,7 @@ You should see output similar to:
 bash
 Workerman started at http://0.0.0.0:9502
 The server will now be ready to handle WebSocket connections.
+```
 
 4. Start the Web Server (Optional)
 If you need a local server to serve the frontend HTML, you can use PHP’s built-in web server:
@@ -57,6 +62,7 @@ If you need a local server to serve the frontend HTML, you can use PHP’s built
 bash
 php -S localhost:8000
 This will start a local server at http://localhost:8000, where the frontend can be accessed.
+```
 
 5. Open the Frontend
 In your browser, navigate to the URL where your frontend is served (http://localhost:8000 by default). The frontend will allow you to enter your User ID and Quiz ID to join a quiz session.
