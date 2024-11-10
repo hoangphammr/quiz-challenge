@@ -74,7 +74,9 @@ After all users have answered a question, the next question will be displayed.
 The leaderboard will update in real-time as users answer questions.
 
 ## Troubleshooting
+```markdown
 Error: WebSocket connection failed
+```
 
 Make sure your WebSocket server (php server.php start) is running.
 Ensure no other services are using port 9502 (or whatever port you have set).
