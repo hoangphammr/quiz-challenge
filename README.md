@@ -1,74 +1,83 @@
-# quiz-challenge
-Real-Time Vocabulary Quiz Coding Challenge
+# Real-Time Quiz Application
+## Introduction
+This project is a real-time quiz application built using PHP with Workerman for handling WebSocket connections, along with a simple HTML/JavaScript frontend. The quiz allows users to join a quiz session using a unique Quiz ID and User ID, answer questions, and see their scores update in real-time on a leaderboard.
 
-Overview
+### Key Features:
+- Real-time Question Display: Users are shown the same questions at the same time and can submit their answers.
+- Real-time Leaderboard: Scores are updated live and a leaderboard is displayed as users answer questions.
+- Quiz Flow: All users answer a question before moving to the next, and the quiz is only marked complete when all users have finished.
+## How to Set Up?
+Follow these steps to set up and run the Real-Time Quiz Application locally.
 
-Welcome to the Real-Time Quiz coding challenge! Your task is to create a technical solution for a real-time quiz feature for an English learning application. This feature will allow users to answer questions in real-time, compete with others, and see their scores updated live on a leaderboard.
+### Prerequisites
+Before setting up, ensure you have the following installed:
 
-Acceptance Criteria
+```markdown
+PHP (>= 7.4)
+Composer (for managing PHP dependencies)
+Node.js (for building the frontend if needed)
 
-User Participation:
+1. Clone the Repository
+Start by cloning the repository to your local machine:
 
-Users should be able to join a quiz session using a unique quiz ID.
-The system should support multiple users joining the same quiz session simultaneously.
-Real-Time Score Updates:
+```markdown
+bash
+git clone https://github.com/hoangphammr/quiz-challenge.git
+cd real-time-quiz
 
-As users submit answers, their scores should be updated in real-time.
-The scoring system must be accurate and consistent.
-Real-Time Leaderboard:
+2. Install Dependencies
+Use Composer to install PHP dependencies (including Workerman, which is used to handle WebSocket connections):
 
-A leaderboard should display the current standings of all participants.
-The leaderboard should update promptly as scores change.
-Challenge Requirements
+```markdown
+bash
+composer install
 
-Part 1: System Design
+This will install all necessary packages defined in composer.json.
 
-System Design Document:
-Architecture Diagram: Create an architecture diagram illustrating how different components of the system interact. This should include all components required for the feature, including the server, client applications, database, and any external services.
-Component Description: Describe each component's role in the system.
-Data Flow: Explain how data flows through the system from when a user joins a quiz to when the leaderboard is updated.
-Technologies and Tools: List and justify the technologies and tools chosen for each component.
-Part 2: Implementation
+3. Start the WebSocket Server
+Navigate to the project root and run the WebSocket server using Workerman:
 
-Pick a Component:
+```markdown
+bash
+php server.php
 
-Implement one of the core components below using the technologies that you are comfortable with. The rest of the system can be mocked using mock services or data.
-Requirements for the Implemented Component:
+By default, the WebSocket server will run on port 9502. You can adjust the port in the server.php file if needed.
 
-Real-time Quiz Participation: Users should be able to join a quiz session using a unique quiz ID.
-Real-time Score Updates: Users' scores should be updated in real-time as they submit answers.
-Real-time Leaderboard: A leaderboard should display the current standings of all participants in real-time.
-Build For the Future:
+You should see output similar to:
 
-Scalability: Design and implement your component with scalability in mind. Consider how the system would handle a large number of users or quiz sessions. Discuss any trade-offs you made in your design and implementation.
-Performance: Your component should perform well even under heavy load. Consider how you can optimize your code and your use of resources to ensure high performance.
-Reliability: Your component should be reliable and handle errors gracefully. Consider how you can make your component resilient to failures.
-Maintainability: Your code should be clean, well-organized, and easy to maintain. Consider how you can make it easy for other developers to understand and modify your code.
-Monitoring and Observability: Discuss how you would monitor the performance of your component and diagnose issues. Consider how you can make your component observable.
-Submission Guidelines
+```markdown
+bash
+Workerman started at http://0.0.0.0:9502
+The server will now be ready to handle WebSocket connections.
 
-Candidates are required to submit the following as part of the coding challenge:
+4. Start the Web Server (Optional)
+If you need a local server to serve the frontend HTML, you can use PHP’s built-in web server:
 
-System Design Documents:
+```markdown
+bash
+php -S localhost:8000
+This will start a local server at http://localhost:8000, where the frontend can be accessed.
 
-Architecture Diagram: Illustrate the interaction of system components (server, client applications, database, etc.).
-Component Descriptions: Explain the role of each component.
-Data Flow: Describe how data flows from user participation to leaderboard updates.
-Technology Justification: List the chosen technologies and justify why they were selected.
-Working Code:
+5. Open the Frontend
+In your browser, navigate to the URL where your frontend is served (http://localhost:8000 by default). The frontend will allow you to enter your User ID and Quiz ID to join a quiz session.
 
-Choose one of the core components mentioned in the requirements and implement it using your preferred technologies. The rest of the system can be mocked using appropriate mock services or data.
-Ensure the code meets criteria such as scalability, performance, reliability, maintainability, and observability.
-Video Submission:
+6. Play the Quiz
+Enter a User ID and a Quiz ID to join a quiz.
+The first question will appear once you join, and you can select an answer.
+After all users have answered a question, the next question will be displayed.
+The leaderboard will update in real-time as users answer questions.
 
-Record a short video (5-10 minutes) where you address the following:
-Introduction: Introduce yourself and state your name.
-Assignment Overview: Describe the technical assignment that ELSA gave in your own words. Feel free to mention any assumptions or clarifications you made.
-Solution Overview: Provide a crisp overview of your solution, highlighting key design and implementation elements.
-Demo: Run the code on your local machine and walk us through the output or any tests you’ve written to verify the functionality.
-Conclusion: Conclude with any remarks, such as challenges faced, learnings, or further improvements you would make.
-Video Requirements:
+## Troubleshooting
+Error: WebSocket connection failed
 
-The video must be between 5-10 minutes. Any submission beyond 10 minutes will be rejected upfront.
-Use any recording device (smartphone, webcam, etc.), ensuring good audio and video quality.
-Ensure clear and concise communication.
+Make sure your WebSocket server (php server.php) is running.
+Ensure no other services are using port 8080 (or whatever port you have set).
+Error: Leaderboard not updating
+
+Ensure that the WebSocket connection is working and that the backend is sending updates properly.
+Check the browser console for any JavaScript errors.
+
+## Conclusion
+This project is a simple implementation of a real-time quiz application using WebSockets. It demonstrates how you can create interactive real-time applications with PHP and JavaScript. You can extend it further by adding more features like user authentication, multiple quizzes, and even adding different types of questions.
+
+Feel free to fork this project, make improvements, and contribute!
