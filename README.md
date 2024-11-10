@@ -42,7 +42,7 @@ Navigate to the project root and run the WebSocket server using Workerman:
 
 ```markdown
 bash
-php server.php
+php server.php start
 ```
 
 By default, the WebSocket server will run on port 9502. You can adjust the port in the server.php file if needed.
@@ -76,8 +76,8 @@ The leaderboard will update in real-time as users answer questions.
 ## Troubleshooting
 Error: WebSocket connection failed
 
-Make sure your WebSocket server (php server.php) is running.
-Ensure no other services are using port 8080 (or whatever port you have set).
+Make sure your WebSocket server (php server.php start) is running.
+Ensure no other services are using port 9502 (or whatever port you have set).
 Error: Leaderboard not updating
 
 Ensure that the WebSocket connection is working and that the backend is sending updates properly.
