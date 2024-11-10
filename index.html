@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Quiz</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        button { margin: 10px; }
+        #questionContainer { display: none; }
+        #leaderboardContainer { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Real-Time Quiz</h1>
+
+    <!-- Join Quiz Form -->
+    <div id="joinForm">
+        <label for="userId">User ID:</label>
+        <input type="text" id="userId" required><br><br>
+
+        <label for="quizId">Quiz ID:</label>
+        <input type="text" id="quizId" required><br><br>
+
+        <button onclick="joinQuiz()">Join Quiz</button>
+    </div>
+
+    <!-- Quiz Container -->
+    <div id="questionContainer">
+        <h2 id="questionText">Loading question...</h2>
+        <div id="optionsContainer"></div>
+    </div>
+
+    <!-- Leaderboard -->
+    <div id="leaderboardContainer">
+        <h3>Leaderboard</h3>
+        <ul id="leaderboardList"></ul>
+    </div>
+
+    <script>
+        let currentUserId = '';
+        const socket = new WebSocket('ws://localhost:9502');
+
+        // Join the quiz
+        function joinQuiz() {
+            const userId = document.getElementById('userId').value;
+            const quizId = document.getElementById('quizId').value;
+
+            if (!userId || !quizId) {
+                alert('Please provide both User ID and Quiz ID');
+                return;
+            }
+
+            currentUserId = userId;
+
+            // Send join message to WebSocket server
+            socket.send(JSON.stringify({
+                action: 'joinQuiz',
+                userId: userId,
+                quizId: quizId
+            }));
+
+            // Hide the join form and show the question container
+            document.getElementById('joinForm').style.display = 'none';
+            document.getElementById('questionContainer').style.display = 'block';
+        }
+
+        // Handle WebSocket messages
+        socket.onmessage = function(event) {
+            const message = JSON.parse(event.data);
+
+            switch (message.action) {
+                case 'joinConfirmation':
+                case 'nextQuestion':
+                    displayQuestion(message.question);
+                    break;
+
+                case 'updateLeaderboard':
+                    updateLeaderboard(message.leaderboard);
+                    break;
+
+                case 'quizCompleted':
+                    alert('Quiz Completed!');
+                    updateLeaderboard(message.leaderboard);
+                    document.getElementById('questionContainer').style.display = 'none';
+                    break;
+            }
+        };
+
+        // Display question and options
+        function displayQuestion(question) {
+            const questionText = document.getElementById('questionText');
+            const optionsContainer = document.getElementById('optionsContainer');
+            
+            questionText.textContent = question.text;
+            optionsContainer.innerHTML = '';
+
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.onclick = () => submitAnswer(index === question.correctOption);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        // Submit answer
+        function submitAnswer(isCorrect) {
+            socket.send(JSON.stringify({
+                action: 'submitAnswer',
+                userId: currentUserId,
+                isCorrect: isCorrect
+            }));
+        }
+
+        // Update leaderboard
+        function updateLeaderboard(leaderboardData) {
+            const leaderboardList = document.getElementById('leaderboardList');
+            leaderboardList.innerHTML = '';
+
+            leaderboardData.forEach(entry => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `User: ${entry.userId}, Score: ${entry.score}`;
+                leaderboardList.appendChild(listItem);
+            });
+        }
+    </script>
+</body>
+</html>
