@@ -24,7 +24,7 @@ Start by cloning the repository to your local machine:
 ```markdown
 bash
 git clone https://github.com/hoangphammr/quiz-challenge.git
-cd real-time-quiz
+cd quiz-challenge
 ```
 
 2. Install Dependencies
